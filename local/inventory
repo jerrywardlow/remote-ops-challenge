@@ -1,0 +1,14 @@
+[balancers]
+ops1
+
+[webservers]
+ops2
+ops3
+
+[nagios_masters]
+ops4
+
+[nagios_nodes:children]
+balancers
+webservers
+nagios_masters
