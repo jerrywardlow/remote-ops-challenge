@@ -1,0 +1,6 @@
+---
+
+- import_playbook: webservers.yml
+- import_playbook: balancers.yml
+- import_playbook: nagios_masters.yml
+- import_playbook: nagios_nodes.yml
