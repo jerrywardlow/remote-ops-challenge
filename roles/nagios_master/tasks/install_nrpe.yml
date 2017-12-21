@@ -1,0 +1,26 @@
+---
+
+- name: Fetch and extract Nagios NRPE source
+  unarchive:
+    src: https://github.com/NagiosEnterprises/nrpe/archive/nrpe-{{ nagios.nrpe.version }}.tar.gz
+    dest: /tmp/
+    remote_src: yes
+
+- name: Configure Nagios NRPE
+  command: ./configure
+  args:
+    chdir: /tmp/nrpe-nrpe-{{ nagios.nrpe.version }}
+    creates: /tmp/nrpe-nrpe-{{ nagios.nrpe.version }}/Makefile
+
+- name: Compile check_nrpe
+  command: make check_nrpe
+  args:
+    chdir: /tmp/nrpe-nrpe-{{ nagios.nrpe.version }}
+    creates: /tmp/nrpe-nrpe-{{ nagios.nrpe.version }}/src/check_nrpe
+
+- name: Install check_nrpe
+  command: make install-plugin
+  args:
+    chdir: /tmp/nrpe-nrpe-{{ nagios.nrpe.version }}
+    creates: /usr/local/nagios/libexec/check_nrpe
+  notify: restart nagios

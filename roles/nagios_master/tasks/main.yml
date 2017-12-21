@@ -3,4 +3,5 @@
 - include_tasks: prerequisites.yml
 - include_tasks: install_core.yml
 - include_tasks: install_plugins.yml
+- include_tasks: install_nrpe.yml
 - include_tasks: configure.yml
