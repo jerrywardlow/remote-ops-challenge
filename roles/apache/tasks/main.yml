@@ -17,6 +17,13 @@
     insertafter: '^LogFormat'
   notify: restart apache2
 
+- name: Override default log format
+  lineinfile:
+    path: /etc/apache2/sites-available/000-default.conf
+    regexp: "^\tCustomLog"
+    line: "\tCustomLog ${APACHE_LOG_DIR}/access.log forwarded"
+  notify: restart apache2
+
 - name: Overwrite default index.html
   copy:
     dest: /var/www/html/index.html
