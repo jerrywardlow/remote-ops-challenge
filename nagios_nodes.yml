@@ -2,3 +2,4 @@
 
 - hosts: nagios_nodes
   roles:
+    - nagios_node
