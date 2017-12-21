@@ -1,0 +1,26 @@
+---
+
+- name: Ensure group sudo is present
+  group:
+    name: sudo
+    state: present
+
+- name: Create user account
+  user:
+    name: "{{ ops_user.name }}"
+    comment: "Ops User"
+    groups: sudo
+    append: yes
+
+- name: Fetch and set user authorized key
+  authorized_key:
+    user: "{{ ops_user.name }}"
+    state: present
+    key: "{{ ops_user.ssh_key }}"
+
+- name: Enable passwordless sudo
+  lineinfile:
+    path: /etc/sudoers
+    state: present
+    line: "{{ ops_user.name }} ALL = (ALL) NOPASSWD: ALL"
+  when: ops_user.nopasswd == true 
