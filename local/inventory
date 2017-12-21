@@ -1,12 +1,12 @@
 [balancers]
-ops1
+ops1 ansible_host="172.37.17.51"
 
 [webservers]
-ops2
-ops3
+ops2 ansible_host="172.37.17.52"
+ops3 ansible_host="172.37.17.53"
 
 [nagios_masters]
-ops4
+ops4 ansible_host="172.37.17.54"
 
 [nagios_nodes:children]
 balancers
