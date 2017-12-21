@@ -1,0 +1,56 @@
+---
+
+- name: Fetch and extract Nagios Core source
+  unarchive:
+    src: https://github.com/NagiosEnterprises/nagioscore/archive/nagios-{{ nagios.core.version }}.tar.gz
+    dest: /tmp/
+    remote_src: yes
+
+- name: Configure Nagios Core
+  command: ./configure --with-httpd-conf=/etc/apache2/sites-enabled
+  args:
+    chdir: /tmp/nagioscore-nagios-{{ nagios.core.version }}
+    creates: /tmp/nagioscore-nagios-{{ nagios.core.version }}/Makefile
+
+- name: Compile Nagios Core
+  command: make all
+  args:
+    chdir: /tmp/nagioscore-nagios-{{ nagios.core.version }}
+    creates: /tmp/nagioscore-nagios-{{ nagios.core.version }}/base/nagios
+
+- name: Install Nagios binaries
+  command: make install
+  args:
+    chdir: /tmp/nagioscore-nagios-{{ nagios.core.version }}
+    creates: /usr/local/nagios/bin/nagios
+
+- name: Install Nagios service
+  command: make install-init
+  args:
+    chdir: /tmp/nagioscore-nagios-{{ nagios.core.version }}
+    creates: /etc/init.d/nagios
+
+- name: Update Nagios rc.d
+  command: update-rc.d nagios defaults
+  args:
+    creates: /etc/rc0.d/K20nagios
+
+- name: Install Nagios command mode
+  command: make install-commandmode
+  args:
+    chdir: /tmp/nagioscore-nagios-{{ nagios.core.version }}
+    creates: /usr/local/nagios/var/rw/
+
+- name: Install sample Nagios config
+  command: make install-config
+  args:
+    chdir: /tmp/nagioscore-nagios-{{ nagios.core.version }}
+    creates: /usr/local/nagios/etc/objects/localhost.cfg
+  notify: restart nagios
+
+- name: Install Nagios webconf
+  command: make install-webconf
+  args:
+    chdir: /tmp/nagioscore-nagios-{{ nagios.core.version }}
+    creates: /etc/apache2/sites-enabled/nagios.conf
+  notify: restart apache2
