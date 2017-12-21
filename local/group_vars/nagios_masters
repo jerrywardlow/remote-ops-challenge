@@ -13,7 +13,10 @@ firewall_rules:
     proto: "tcp"
 
 nagios:
-  version: "4.3.4"
+  core:
+    version: "4.3.4"
+  plugins:
+    version: "2.2.1"
   htpasswd:
     - name: nagiosadmin
       password: password
