@@ -1,0 +1,13 @@
+---
+
+firewall_rules:
+- name: ssh
+  rule: "allow"
+  src: "0.0.0.0/0"
+  port: "22"
+  proto: "tcp"
+- name: http
+  rule: "allow"
+  src: "172.37.17.51"
+  port: "80"
+  proto: "tcp"
