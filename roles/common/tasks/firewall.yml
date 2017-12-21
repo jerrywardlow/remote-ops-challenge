@@ -3,6 +3,14 @@
 - name: Manage UFW service
   ufw:
     state: enabled
+    direction: "{{ item.direction }}"
+    policy: "{{ item.policy }}"
+  with_items:
+    - direction: incoming
+      policy: deny
+    - direction: outgoing
+      policy: allow
+
 
 - name: Manage UFW rules
   ufw:
