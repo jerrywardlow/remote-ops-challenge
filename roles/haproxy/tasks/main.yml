@@ -1,0 +1,6 @@
+---
+
+- name: Install HAProxy
+  package:
+    name: haproxy
+    state: latest
