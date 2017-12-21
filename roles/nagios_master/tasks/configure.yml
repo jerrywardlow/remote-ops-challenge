@@ -1,0 +1,10 @@
+---
+
+- name: Manage Nagios basic auth
+  htpasswd:
+    path: /usr/local/nagios/etc/htpasswd.users 
+    name: "{{ item.name }}" 
+    password: "{{ item.password }}"
+    state: "{{ item.state }}"
+  with_items: "{{ nagios.htpasswd }}"
+  notify: restart apache2
