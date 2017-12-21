@@ -1,5 +1,7 @@
 # Ansible Role - Apache
 
+Manages the Apache2 package and associated tasks.
+
 ### Variables
 
 `html_content` - Defined in `<inventory>/host_vars/ops[1,2]`. Dictates the content of the returned HTML web page from the webserver pool.
