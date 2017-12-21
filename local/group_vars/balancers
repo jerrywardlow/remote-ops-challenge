@@ -1,0 +1,25 @@
+---
+
+firewall_rules:
+- name: ssh
+  rule: "allow"
+  src: "0.0.0.0/0"
+  port: "22"
+  proto: "tcp"
+- name: haproxy
+  rule: "allow"
+  src: "0.0.0.0/0"
+  port: "60000:65000"
+  proto: "tcp"
+
+haproxy:
+  frontend:
+    bind_port: "60000-65000"
+  backend:
+    servers:
+      - name: ops2
+        address: ops2
+        port: 80
+      - name: ops3
+        address: ops3
+        port: 80
