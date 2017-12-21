@@ -12,9 +12,21 @@ firewall_rules:
   port: "60000:65000"
   proto: "tcp"
 
+iptables_rules:
+  - name: "Pre-HAProxy routing"
+    in_interface: "eth1"
+    destination_port: "60001:65000"
+    to_ports: "60000"
+    table: "nat"
+    chain: "PREROUTING"
+    protocol: "tcp"
+    match: "tcp"
+    jump: "REDIRECT"
+
+
 haproxy:
   frontend:
-    bind_port: "60000-65000"
+    bind_port: "60000"
   backend:
     stick_table:
       type: "ip"
