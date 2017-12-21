@@ -37,10 +37,3 @@ haproxy:
       type: "ip"
       size: "1m"
       expire: "1h"
-    servers:
-      - name: ops2
-        address: ops2
-        port: 80
-      - name: ops3
-        address: ops3
-        port: 80

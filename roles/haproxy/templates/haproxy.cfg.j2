@@ -27,6 +27,6 @@ frontend http
 backend default
         stick-table type {{ stick.type }} size {{ stick.size }} expire {{ stick.expire }}
         stick on src
-{% for server in haproxy.backend.servers %}
-        server {{ server.name }} {{ server.address }}:{{ server.port }} check
+{% for server in groups['webservers'] %}
+        server {{ server }} {{ hostvars[server].ansible_host }}:80 check
 {% endfor %}
