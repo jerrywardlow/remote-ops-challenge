@@ -22,16 +22,16 @@
     line: "dont_blame_nrpe=1"
   notify: restart nrpe
 
-- name: Custom NRPE process command
+- name: Custom NRPE process command - HAProxy
   lineinfile:
     path: /etc/nagios/nrpe.cfg
     line: "command[check_haproxy]=/usr/lib/nagios/plugins/check_procs -w 1 -C haproxy"
     insertafter: '^command\['
   notify: restart nrpe
 
-- name: Enable NRPE check_procs
+- name: Custom NRPE process command - Apache
   lineinfile:
     path: /etc/nagios/nrpe.cfg
-    line: "command[check_procs]=/usr/lib/nagios/plugins/check_procs -w $ARG1$ -c $ARG2$ -s $ARG3$"
+    line: "command[check_apache]=/usr/lib/nagios/plugins/check_procs -w 2:5 -c 1:500 -C apache2"
     insertafter: '^command\['
   notify: restart nrpe
