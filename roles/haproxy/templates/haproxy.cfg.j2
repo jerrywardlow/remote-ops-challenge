@@ -1,4 +1,5 @@
 # {{ ansible_managed }}
+{% set stick = haproxy.backend.stick_table %}
 
 global
         log /dev/log    local0
@@ -24,7 +25,8 @@ frontend http
         default_backend default
 
 backend default
-        http-request set-header X-Client-IP %[src]
+        stick-table type {{ stick.type }} size {{ stick.size }} expire {{ stick.expire }}
+        stick on src
 {% for server in haproxy.backend.servers %}
-        server {{ server.name }} {{ server.adr }}:{{ server.port }} check
+        server {{ server.name }} {{ server.address }}:{{ server.port }} check
 {% endfor %}
