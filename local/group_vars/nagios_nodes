@@ -1,5 +1,0 @@
----
-
-nagios_master:
-  hosts:
-    - "172.37.17.54"
