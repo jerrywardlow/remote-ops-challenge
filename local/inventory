@@ -11,4 +11,3 @@ ops4
 [nagios_nodes:children]
 balancers
 webservers
-nagios_masters
