@@ -1,5 +1,9 @@
 ---
 
+- name: Add HAProxy 1.8 PPA
+  apt_repository:
+    repo: "ppa:vbernat/haproxy-1.8"
+
 - name: Install HAProxy
   package:
     name: haproxy
