@@ -16,6 +16,10 @@ haproxy:
   frontend:
     bind_port: "60000-65000"
   backend:
+    stick_table:
+      type: "ip"
+      size: "1m"
+      expire: "1h"
     servers:
       - name: ops2
         address: ops2
