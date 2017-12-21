@@ -1,0 +1,17 @@
+---
+
+- name: Install Apache2
+  package:
+    name: apache2
+    state: latest
+
+- name: Enable/start Apache service
+  service:
+    name: apache2
+    state: started
+
+- name: Overwrite default index.html
+  copy:
+    dest: /var/www/html/index.html
+    content: "{{ html_content }}\n"
+    backup: yes
