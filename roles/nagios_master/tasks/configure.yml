@@ -8,3 +8,37 @@
     state: "{{ item.state }}"
   with_items: "{{ nagios.htpasswd }}"
   notify: restart apache2
+
+- name: Manage node config directory
+  file:
+    path: /usr/local/nagios/etc/nodes/
+    state: directory
+    owner: nagios
+    group: nagios
+    mode: 0775
+
+- name: Configure check_nrpe command
+  blockinfile:
+    path: /usr/local/nagios/etc/objects/commands.cfg
+    block: |
+      define command{
+      command_name check_nrpe
+      command_line $USER1$/check_nrpe -H $HOSTADDRESS$ -c $ARG1$
+      }
+
+- name: Include Nagios node conf files
+  lineinfile:
+    path: /usr/local/nagios/etc/nagios.cfg
+    line: 'cfg_dir=/usr/local/nagios/etc/nodes'
+    insertafter: '^#cfg_dir='
+
+- name: Configure NRPE node conf files
+  template:
+    src: node.cfg.j2
+    dest: /usr/local/nagios/etc/nodes/{{ item }}.cfg
+    owner: nagios
+    group: nagios
+    mode: 0664
+  with_inventory_hostnames:
+    - nagios_nodes
+  notify: restart nagios
