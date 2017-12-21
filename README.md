@@ -5,7 +5,7 @@
 * [Description](#description)
 * [Criteria](#criteria)
 * [Architecture](#architecture)
-* [Ansible Roles](docs/roles/index.md)
+* Ansible Roles
     * [Apache](docs/roles/apache.md)
     * [Common](docs/roles/common.md)
     * [Haproxy](docs/roles/haproxy.md)
