@@ -2,3 +2,8 @@
 
 ansible_user: "vagrant"
 ansible_ssh_pass: "vagrant"
+
+ops_user:
+  name: "expensify"
+  nopasswd: false
+  ssh_key: "{{ lookup('file', 'consolidated_keys.txt') }}"
