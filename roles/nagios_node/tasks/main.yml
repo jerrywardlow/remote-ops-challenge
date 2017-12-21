@@ -14,3 +14,24 @@
     regexp: "^allowed_hosts="
     line: "allowed_hosts={{ nagios_master.hosts|join(',') }}"
   notify: restart nrpe
+
+- name: Override dont_blame_nrpe
+  lineinfile:
+    path: /etc/nagios/nrpe.cfg
+    regexp: "^dont_blame_nrpe="
+    line: "dont_blame_nrpe=1"
+  notify: restart nrpe
+
+- name: Custom NRPE process command
+  lineinfile:
+    path: /etc/nagios/nrpe.cfg
+    line: "command[check_haproxy]=/usr/lib/nagios/plugins/check_procs -w 1 -C haproxy"
+    insertafter: '^command\['
+  notify: restart nrpe
+
+- name: Enable NRPE check_procs
+  lineinfile:
+    path: /etc/nagios/nrpe.cfg
+    line: "command[check_procs]=/usr/lib/nagios/plugins/check_procs -w $ARG1$ -c $ARG2$ -s $ARG3$"
+    insertafter: '^command\['
+  notify: restart nrpe
