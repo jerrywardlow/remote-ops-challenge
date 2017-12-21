@@ -1,0 +1,25 @@
+---
+
+- name: Install Nagios prerequisites
+  package:
+    name: "{{ item }}"
+    state: latest 
+  with_items: "{{ nagios.prerequisites }}"
+
+- name: Enable Apache2 modules
+  apache2_module:
+    state: present
+    name: "{{ item }}"
+  with_items:
+    - rewrite
+    - cgi
+
+- name: Add nagios user
+  user:
+    name: nagios
+
+- name: Manage www-data user
+  user:
+    name: www-data
+    groups: nagios
+    append: yes
