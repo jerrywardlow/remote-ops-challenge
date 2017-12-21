@@ -23,5 +23,6 @@ nagios:
     - libgd2-xpm-dev
     - make
     - php5
+    - python-passlib
     - unzip
     - wget
