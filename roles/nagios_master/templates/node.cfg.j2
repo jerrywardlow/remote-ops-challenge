@@ -1,0 +1,43 @@
+#{{ ansible_managed }}
+
+define host {
+    use                   linux-server
+    host_name             {{ item }}
+    address               {{ hostvars[item].ansible_host  }}
+    check_period          24x7
+    max_check_attempts    5
+    notification_period   24x7
+    notification_interval 30
+}
+
+define service {
+    use                 generic-service
+    host_name           {{ item }}
+    service_description Ping
+    check_command       check_ping!50,10%!100,20%
+}
+
+define service {
+    use                 generic-service
+    host_name           {{ item }}
+    service_description SSH
+    check_command       check_ssh 
+}
+
+{% if 'webservers' in hostvars[item].group_names %}
+define service {
+    use                 generic-service
+    host_name           {{ item }}
+    service_description Check Apache2
+    check_command       check_nrpe!check_procs!1!1!apache2 
+}
+{% endif %}
+
+{% if 'balancers' in hostvars[item].group_names %}
+define service {
+    use                 generic-service
+    host_name           {{ item }}
+    service_description HAProxy
+    check_command       check_nrpe!check_haproxy
+}
+{% endif %}
