@@ -1,0 +1,30 @@
+---
+
+- name: Manage UFW service
+  ufw:
+    state: enabled
+
+- name: Manage UFW rules
+  ufw:
+    rule: "{{ item.rule }}"
+    src: "{{ item.src }}"
+    port: "{{ item.port }}"
+    proto: "{{ item.proto }}"
+  with_items:
+    - "{{ firewall_rules }}"
+  when: firewall_rules is defined
+
+- name: Manage iptables
+  iptables:
+    action: insert
+    in_interface: "{{ item.in_interface }}"
+    destination_port: "{{ item.destination_port }}"
+    to_ports: "{{ item.to_ports }}"
+    table: "{{ item.table }}"
+    chain: "{{ item.chain }}"
+    protocol: "{{ item.protocol }}"
+    match: "{{ item.match }}"
+    jump: "{{ item.jump }}"
+  with_items:
+    - "{{ iptables_rules }}"
+  when: iptables_rules is defined
