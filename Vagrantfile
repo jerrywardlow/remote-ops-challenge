@@ -29,7 +29,8 @@ Vagrant.configure(2) do |config|
           # Remove default inventory limit
           a.limit = 'all'
           # Specify master playbook
-          a.playbook = "cluster.yml"
+          a.playbook = 'cluster.yml'
+          a.inventory_path = 'local/inventory'
         end
       end
 
