@@ -25,11 +25,20 @@ nagios:
     - apache2
     - apache2-utils
     - autoconf
+    - bc
+    - build-essential
+    - dc
+    - gawk
     - gcc
+    - gettext
     - libc6
     - libgd2-xpm-dev
+    - libmcrypt-dev
+    - libnet-snmp-perl
+    - libssl-dev
     - make
     - php5
     - python-passlib
+    - snmp
     - unzip
     - wget
