@@ -1,0 +1,5 @@
+---
+
+# Ansible configuration for servers accessible only through SSH bastion host
+# Groups: 'balancers', 'webservers'
+ansible_ssh_common_args: '-o ProxyCommand="ssh -W %h:%p -q ubuntu@REDACTED -o StrictHostKeyChecking=no"'
