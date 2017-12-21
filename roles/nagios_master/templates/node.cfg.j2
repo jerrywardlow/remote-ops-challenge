@@ -13,13 +13,6 @@ define host {
 define service {
     use                 generic-service
     host_name           {{ item }}
-    service_description Ping
-    check_command       check_ping!50,10%!100,20%
-}
-
-define service {
-    use                 generic-service
-    host_name           {{ item }}
     service_description SSH
     check_command       check_ssh 
 }
