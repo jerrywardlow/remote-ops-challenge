@@ -29,7 +29,7 @@ define service {
     use                 generic-service
     host_name           {{ item }}
     service_description Check Apache2
-    check_command       check_nrpe!check_procs!1!1!apache2 
+    check_command       check_nrpe!check_apache
 }
 {% endif %}
 
