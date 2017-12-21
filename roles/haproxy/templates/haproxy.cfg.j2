@@ -1,0 +1,30 @@
+# {{ ansible_managed }}
+
+global
+        log /dev/log    local0
+        log /dev/log    local1 notice
+        chroot /var/lib/haproxy
+        user haproxy
+        group haproxy
+        daemon
+
+defaults
+        log     global
+        mode    http
+        option  httplog
+        option  dontlognull
+        option  forwardfor
+        option  http-server-close
+        timeout connect 5000
+        timeout client  50000
+        timeout server  50000
+
+frontend http
+        bind *:{{ haproxy.frontend.bind_port }}
+        default_backend default
+
+backend default
+        http-request set-header X-Client-IP %[src]
+{% for server in haproxy.backend.servers %}
+        server {{ server.name }} {{ server.adr }}:{{ server.port }} check
+{% endfor %}
