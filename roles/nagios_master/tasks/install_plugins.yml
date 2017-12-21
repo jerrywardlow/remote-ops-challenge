@@ -1,0 +1,33 @@
+---
+
+- name: Fetch and extract Nagios Plugins source
+  unarchive:
+    src: https://github.com/nagios-plugins/nagios-plugins/archive/release-{{ nagios.plugins.version }}.tar.gz
+    dest: /tmp/
+    remote_src: yes
+
+
+- name: Setup Nagios plugins
+  command: ./tools/setup
+  args:
+    chdir: /tmp/nagios-plugins-release-{{ nagios.plugins.version }}
+    creates: /tmp/nagios-plugins-release-{{ nagios.plugins.version }}/configure
+
+- name: Configure Nagios plugins
+  command: ./configure
+  args:
+    chdir: /tmp/nagios-plugins-release-{{ nagios.plugins.version }}
+    creates: /tmp/nagios-plugins-release-{{ nagios.plugins.version }}/Makefile
+
+- name: Compile Nagios plugins
+  command: make
+  args:
+    chdir: /tmp/nagios-plugins-release-{{ nagios.plugins.version }}
+    creates: /tmp/nagios-plugins-release-{{ nagios.plugins.version }}/lib/extra_opts.o
+
+- name: Instal Nagios Plugins
+  command: make install
+  args:
+    chdir: /tmp/nagios-plugins-release-{{ nagios.plugins.version }}
+    creates: /usr/local/nagios/libexec/check_disk
+  notify: restart nagios
