@@ -1,0 +1,4 @@
+---
+
+- hosts: nagios_nodes
+  roles:

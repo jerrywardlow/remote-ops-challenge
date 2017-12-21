@@ -1,0 +1,5 @@
+---
+
+- hosts: nagios_masters
+  roles:
+    - common
