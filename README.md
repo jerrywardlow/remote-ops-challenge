@@ -48,6 +48,7 @@ The cluster is to be configured as follows:
 
 ### Architecture
 
+##### Ansible
 I chose Ansible for this project for several reasons, the most important being
 that I'm very comfortable with it and have plenty of experience wrestling with
 it's intricacies. Additionally, the agentless model means that the production
@@ -55,7 +56,11 @@ cluster can be deployed with minimal dependencies. The only prior knowledge
 needed is the public address of each node. For a scenario such as this, well,
 this is all the info we've got so Ansible is perfect!
 
-For design decisions are outlined in the documentation for individual roles.
+##### HAProxy
+I love HAProxy. It sees heavy use wherever I can implement it, including routing
+traffic through my homelab. Configuration is straightforward and powerful, and
+tutorials are abundant. HAProxy made me feel like a superhero the first time
+I implemented it instead of an AWS ELB.
 
 ### Dependencies
 
