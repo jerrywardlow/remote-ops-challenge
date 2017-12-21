@@ -1,0 +1,16 @@
+---
+
+- name: Install Nagios Plugins and NRPE
+  package:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - nagios-plugins
+    - nagios-nrpe-server
+
+- name: Configure allowed Nagios master hosts
+  lineinfile:
+    path: /etc/nagios/nrpe.cfg
+    regexp: "^allowed_hosts="
+    line: "allowed_hosts={{ nagios_master.hosts|join(',') }}"
+  notify: restart nrpe
