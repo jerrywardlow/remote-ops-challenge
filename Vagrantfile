@@ -18,7 +18,7 @@ Vagrant.configure(2) do |config|
 
       nodeconf.vm.hostname = "ops#{i}"
       nodeconf.vm.box = ubuntu_box
-      nodeconf.vm.network :private_network, ip: "172.37.17.#{i+50}"
+      nodeconf.vm.network :private_network, ip: "172.17.17.#{i+50}"
 
       # Disable default synced folder
       nodeconf.vm.synced_folder '.', '/vagrant', disabled: true

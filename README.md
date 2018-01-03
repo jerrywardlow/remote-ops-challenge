@@ -74,8 +74,8 @@ This project includes a local test environment with the following dependencies
 mirroring the four node Ubuntu 14.04 cluster and automatically provision with
 the appropriate Ansible playbooks. Once that is complete, take the cluster for
 a spin!
-* Access the Nagios dashboard at 172.37.17.54/nagios, username `nagiosadmin`, password `password`
-* `curl` some requests to the load balancer at 172.37.17.51:60000-65000
+* Access the Nagios dashboard at 172.17.17.54/nagios, username `nagiosadmin`, password `password`
+* `curl` some requests to the load balancer at 172.17.17.51:60000-65000
     - Knock a node out of the webserver pool with `vagrant halt ops2` and verify the expected load balancer configuration
 * Try and SSH into the other nodes in the cluster, it's a pain! Access `ops1-3` via SSH forwarding through `ops4`.
 

@@ -1,12 +1,12 @@
 [balancers]
-ops1 ansible_host="172.37.17.51" internal_ip="172.37.17.51"
+ops1 ansible_host="172.17.17.51" internal_ip="172.17.17.51"
 
 [webservers]
-ops2 ansible_host="172.37.17.52" internal_ip="172.37.17.52"
-ops3 ansible_host="172.37.17.53" internal_ip="172.37.17.53"
+ops2 ansible_host="172.17.17.52" internal_ip="172.17.17.52"
+ops3 ansible_host="172.17.17.53" internal_ip="172.17.17.53"
 
 [nagios_masters]
-ops4 ansible_host="172.37.17.54" internal_ip="172.37.17.54"
+ops4 ansible_host="172.17.17.54" internal_ip="172.17.17.54"
 
 [nagios_nodes:children]
 balancers
