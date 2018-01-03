@@ -1,5 +1,7 @@
 ---
 
+# UFW rule for publicly accessible nodes
+# In this scenario, Nagios master nodes acts as public SSH bastions
 - name: Manage UFW - Public SSH
   ufw:
     rule: "allow"
@@ -7,6 +9,7 @@
     proto: "tcp"
   when: "'nagios_masters' in group_names"
 
+# UFW rule for SSH access inbound from SSH bastion
 - name: Manage UFW - Private SSH
   ufw:
     rule: "allow"
@@ -17,6 +20,7 @@
     - nagios_masters
   when: "'private_ssh' in group_names"
 
+# Default UFW policy: deny incoming, allow outgoing
 - name: Manage UFW default policy
   ufw:
     state: enabled
@@ -28,6 +32,7 @@
     - direction: outgoing
       policy: allow
 
+# UFW rule to allow HTTP access to Nagios masters
 - name: Manage UFW - Public HTTP
   ufw:
     rule: "allow"
@@ -35,6 +40,7 @@
     proto: "tcp"
   when: "'nagios_masters' in group_names"
 
+# UFW rule to allow internal HTTP access to webservers from load balancers
 - name: Manage UFW - Private HTTP
   ufw:
     rule: "allow"
@@ -45,6 +51,7 @@
     - balancers
   when: "'webservers' in group_names"
 
+# UFW rule for HAProxy on load balancers
 - name: Manage UFW - HAProxy
   ufw:
     rule: "allow"
@@ -52,6 +59,7 @@
     proto: "tcp"
   when: "'balancers' in group_names"
 
+# UFW rule for NRPE access on Nagios nodes inbound from Nagios master
 - name: Manage UFW - NRPE
   ufw:
     rule: "allow"
@@ -62,6 +70,7 @@
     - nagios_masters
   when: "'nagios_nodes' in group_names"
 
+# Additional arbitrary UFW rules defined from vars
 - name: Manage UFW rules
   ufw:
     rule: "{{ item.rule }}"
@@ -72,6 +81,7 @@
     - "{{ firewall_rules }}"
   when: firewall_rules is defined
 
+# Semi-arbitrary iptables rules defined from vars
 - name: Manage iptables
   iptables:
     action: insert
