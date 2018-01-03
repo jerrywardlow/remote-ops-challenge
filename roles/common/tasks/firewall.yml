@@ -1,6 +1,23 @@
 ---
 
-- name: Manage UFW service
+- name: Manage UFW - Public SSH
+  ufw:
+    rule: "allow"
+    port: "22"
+    proto: "tcp"
+  when: "'nagios_masters' in group_names"
+
+- name: Manage UFW - Private SSH
+  ufw:
+    rule: "allow"
+    src: "{{ hostvars[item].internal_ip }}"
+    port: "22"
+    proto: "tcp"
+  with_inventory_hostnames:
+    - nagios_masters
+  when: "'private_ssh' in group_names"
+
+- name: Manage UFW default policy
   ufw:
     state: enabled
     direction: "{{ item.direction }}"
@@ -10,7 +27,6 @@
       policy: deny
     - direction: outgoing
       policy: allow
-
 
 - name: Manage UFW - Public HTTP
   ufw:
@@ -35,23 +51,6 @@
     port: "60000:65000"
     proto: "tcp"
   when: "'balancers' in group_names"
-
-- name: Manage UFW - Public SSH
-  ufw:
-    rule: "allow"
-    port: "22"
-    proto: "tcp"
-  when: "'nagios_masters' in group_names"
-
-- name: Manage UFW - Private SSH
-  ufw:
-    rule: "allow"
-    src: "{{ hostvars[item].internal_ip }}"
-    port: "22"
-    proto: "tcp"
-  with_inventory_hostnames:
-    - nagios_masters
-  when: "'private_ssh' in group_names"
 
 - name: Manage UFW - NRPE
   ufw:
