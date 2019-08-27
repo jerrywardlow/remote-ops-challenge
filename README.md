@@ -39,7 +39,7 @@ The cluster is to be configured as follows:
     - Proxies traffic from this port range to port 80 on the webservers
 * One Nagios monitoring server
     - Monitors the load balancer and webservers
-* All nodes should have a user 'expensify' created
+* All nodes should have a user 'challenge' created
     - User should be in the `sudo` group
     - SSH authentication allowed from the attached `consolidated_keys.txt` (redacted in repo)
 * Firewall access configured

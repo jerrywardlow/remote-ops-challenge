@@ -4,6 +4,6 @@
 ansible_user: "ubuntu"
 
 ops_user:
-  name: "expensify"
+  name: "challenge"
   nopasswd: false
   ssh_key: "{{ lookup('file', 'consolidated_keys.txt') }}"
