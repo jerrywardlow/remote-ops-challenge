@@ -20,11 +20,10 @@
 ### Description
 
 The Remote Operations Challenge is a test designed to evaluate the thought
-process of a new hiring candidate. The challenege can best be described as
+process of a prospective engineer. The challenege can best be described as
 a simulation of standard DevOps and infrastructure tasks faced in the real
 world. The ultimate goal is the management of a four node cluster hosted on
-a cloud provider. In this case, the provider is Amazon Web Services, though
-this has no bearing on the process.
+a cloud provider.
 
 ### Criteria
 
